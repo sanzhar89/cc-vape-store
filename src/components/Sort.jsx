@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 function Sort({ value, onChangeSort }) {
   const [isVisible, setIsVisible] = useState(false);
   const list = [
-    { name: 'популярности (DESC)', sortProperty: 'rating' },
-    { name: 'популярности (ASC)', sortProperty: '-rating' },
-    { name: 'цене (DESC)', sortProperty: 'price' },
-    { name: 'цене (ASC)', sortProperty: '-rating' },
-    { name: 'алфавиту (DESC)', sortProperty: 'title' },
-    { name: 'алфавиту (ASC)', sortProperty: '-rating' },
+    { name: 'популярности ↓', sortProperty: 'rating' },
+    { name: 'популярности ↑', sortProperty: '-rating' },
+    { name: 'цене ↓', sortProperty: 'price' },
+    { name: 'цене ↑', sortProperty: '-rating' },
+    { name: 'алфавиту ↓', sortProperty: 'title' },
+    { name: 'алфавиту ↑', sortProperty: '-rating' },
   ];
 
   const onListItem = i => {
