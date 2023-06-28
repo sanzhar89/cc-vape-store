@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -6,20 +7,23 @@ import CigaretBlock from '../components/CigaretBlock';
 import Skeleton from '../components/CigaretBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
 const Home = () => {
+  const { categoryId, sort } = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+
   const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categoryId, setCategoryId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSortType] = useState({
-    name: 'популярности ↓',
-    sortProperty: 'rating',
-  });
 
-  const sortBy = sortType.sortProperty.replace('-', '');
-  const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc';
+  const onChangeCategory = id => {
+    dispatch(setCategoryId(id));
+  };
+
+  const sortBy = sort.sortProperty.replace('-', '');
+  const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
   const category = categoryId > 0 ? `category=${categoryId}` : '';
   const search = searchValue ? `&search=${searchValue}` : '';
 
@@ -52,11 +56,8 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoryId}
-          onChangeCategory={id => setCategoryId(id)}
-        />
-        <Sort value={sortType} onChangeSort={id => setSortType(id)} />
+        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Весь товар</h2>
       <div className="content__items">{isLoading ? skeletons : cigaret}</div>
